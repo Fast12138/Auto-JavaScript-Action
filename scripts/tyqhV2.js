@@ -1,16 +1,16 @@
 const _0xad3684 = _0x4726c3("统一茄皇三期"),
   _0x176f31 = require("got"),
   _0x59e21d = require("crypto-js"),
-  _0x21f3f4 = "tyqh",
+  _0x21f3f4 = "TYQH",
   _0x526520 = /[\n\&\@]/,
-  _0x49dccd = [_0x21f3f4 + "Cookie"],
+  _0x49dccd = [_0x21f3f4 + "COOKIE"],
   _0x355f5a = 20000,
   _0x173316 = 3;
 
-let tyCookie = ''
+let TYCOOKIE = ''
 
 const _0x8ec2bd = 3.01,
-  _0x2d7777 = "tyqh",
+  _0x2d7777 = "TYQH",
   _0x3a2cdf = "https://leafxcy.coding.net/api/user/leafxcy/project/validcode/shared-depot/validCode/git/blob/master/code.json",
   _0x1ab4f2 = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.39(0x18002730) NetType/WIFI Language/zh_CN miniProgram/wx532ecb3bdaaf92f9",
   _0x2e5446 = "https://thekingoftomato.ioutu.cn",
@@ -202,7 +202,7 @@ class _0x5823dc extends _0x27023c {
       this.all_land_unlock = true;
       this.all_role_unlock = true;
       this.got = this.got.extend({
-        cookieJar: this.cookieJar,
+        COOKIEJar: this.COOKIEJar,
         headers: {
           "User-Agent": _0x1ab4f2,
           Authorization: this.auth,
@@ -1603,7 +1603,7 @@ function _0x4726c3(_0x5e240c) {
     }
 
     read_env(_0x239b56) {
-      let _0x54ca25 = _0x49dccd.map(_0x4f9796 => (tyCookie != "" ? tyCookie : process.env[_0x4f9796]))//(_0x4f9796 => process.env[_0x4f9796]);
+      let _0x54ca25 = _0x49dccd.map(_0x4f9796 => (TYCOOKIE != "" ? TYCOOKIE : process.env[_0x4f9796]))//(_0x4f9796 => process.env[_0x4f9796]);
       for (let _0x521139 of _0x54ca25.filter(_0x21f570 => !!_0x21f570)) {
         for (let _0x2b91ec of _0x521139.split(_0x526520).filter(_0x215d2a => !!_0x215d2a)) {
           if (this.userList.includes(_0x2b91ec)) {
