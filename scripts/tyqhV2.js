@@ -7,6 +7,8 @@ const _0xad3684 = _0x4726c3("统一茄皇三期"),
   _0x355f5a = 20000,
   _0x173316 = 3;
 
+let tyCookie = ''
+
 const _0x8ec2bd = 3.01,
   _0x2d7777 = "tyqh",
   _0x3a2cdf = "https://leafxcy.coding.net/api/user/leafxcy/project/validcode/shared-depot/validCode/git/blob/master/code.json",
@@ -1782,7 +1784,7 @@ function _0x4726c3(_0x5e240c) {
     }
 
     async exitNow() {
-      await this.showmsg();
+      // await this.showmsg();
 
       let _0x583b85 = Date.now(),
         _0x44515d = (_0x583b85 - this.startTime) / 1000;
