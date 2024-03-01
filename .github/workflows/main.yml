@@ -33,5 +33,5 @@ jobs:
           
       - name: Run JavaScript script
         env:
-          MY_SECRET: ${{ secrets.tyqhCookie }}
-        run: node ./scripts/tyqhV2.js  #脚本存在根目录scripts文件夹下
+          MY_SECRET: ${{ secrets.TYQHCOOKIE }}
+        run: node ./scripts/tyqhV2.js  #脚本存在根目录scripts文件夹下 echo $MY_SECRET
