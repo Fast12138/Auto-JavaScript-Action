@@ -33,4 +33,4 @@ jobs:
           npm install crypto-js
           
       - name: Run JavaScript script
-          node ./scripts/tyqhV2.js  #脚本存在根目录scripts文件夹下
+        run: node ./scripts/tyqhV2.js  #脚本存在根目录scripts文件夹下
