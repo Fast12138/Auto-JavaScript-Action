@@ -1,4 +1,11 @@
 {
   "name": "Auto-JavaScript-Action",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "description": "Your package description",
+  "main": "index.js",
+  "dependencies": {
+    "got": "^11.8.2",
+    "tough-cookie": "^4.0.0",
+    "crypto-js": "^4.1.1"
+  }
 }
