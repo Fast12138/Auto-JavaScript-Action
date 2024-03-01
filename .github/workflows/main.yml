@@ -22,6 +22,7 @@ jobs:
       - name: Install Dependency       
         run: |
           npm install
+          npm init
           npm install got
           npm install tough-cookie
           npm install crypto-js
