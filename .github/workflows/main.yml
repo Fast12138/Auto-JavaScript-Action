@@ -13,6 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main  #采用main分支下的
+      
+      - name: Display current directory
+        run: |
+           pwd
+           ls
            
       - name: Setup Node.js
         uses: actions/setup-node@v2  #安装node.js
@@ -26,4 +31,6 @@ jobs:
           npm install got
           npm install tough-cookie
           npm install crypto-js
+          
+      - name: Run JavaScript script
           node ./scripts/tyqhV2.js  #脚本存在根目录scripts文件夹下
