@@ -1423,9 +1423,9 @@ class _0x5823dc extends _0x27023c {
 }
 
 !(async () => {
-  if (!(await _0x2b613f())) {
-    return;
-  }
+  // if (!(await _0x2b613f())) {
+  //   return;
+  // }
 
   if (!_0xad3684.read_env(_0x5823dc)) {
     return;
