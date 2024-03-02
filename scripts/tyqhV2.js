@@ -1601,7 +1601,7 @@ function _0x4726c3(_0x5e240c) {
     }
 
     read_env(_0x239b56) {
-      let _0x54ca25 = (_0x4f9796 => process.env[_0x4f9796]);
+      let _0x54ca25 = _0x49dccd.map(_0x4f9796 => process.env[_0x4f9796]);
       for (let _0x521139 of _0x54ca25.filter(_0x21f570 => !!_0x21f570)) {
         for (let _0x2b91ec of _0x521139.split(_0x526520).filter(_0x215d2a => !!_0x215d2a)) {
           if (this.userList.includes(_0x2b91ec)) {
