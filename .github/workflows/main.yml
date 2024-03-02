@@ -29,11 +29,12 @@ jobs:
           npm install tough-cookie
           npm install crypto-js
           
-      - name: Run JavaScript script
+      - name: 茄皇第三期
         env:
-          TYQHCOOKIE: ${{ secrets.TYQHCOOKIE }}
+          tyqhCookie: ${{ secrets.TYQHCOOKIE }}
+        run: node ./scripts/tyqhV2.js
+          
+      - name: 联通阅读
+        env:
           chinaUnicomCookie: ${{secrets.CHINAUNICOMCOOKIE}}
-        run: | #脚本存在根目录scripts文件夹下
-          node ./scripts/tyqhV2.js
-          node ./scripts/chinaUnicom.js
-          wait
+        run: node ./scripts/chinaUnicom.js
