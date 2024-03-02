@@ -32,7 +32,7 @@ jobs:
       - name: Run JavaScript script
         env:
           TYQHCOOKIE: ${{ secrets.TYQHCOOKIE }}
-          chinaUnicomCookie: ${{CHINAUNICOMCOOKIE}}
+          chinaUnicomCookie: ${{secrets.CHINAUNICOMCOOKIE}}
         run: | #脚本存在根目录scripts文件夹下
           node ./scripts/tyqhV2.js
           node ./scripts/chinaUnicom.js
