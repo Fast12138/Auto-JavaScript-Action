@@ -1,4 +1,4 @@
-name: 茄皇第三期
+name: Script
  
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     paths:
       - 'scripts/**'
   schedule:   
-    - cron: '0 */6 * * *'   #
+    - cron: '0 4,10,16,22 * * *'
     
 env:
   TZ: Asia/Shanghai
