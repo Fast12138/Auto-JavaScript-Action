@@ -1,4 +1,4 @@
-name: 茄皇三期
+name: Auto-JavaScript
  
 on:
   workflow_dispatch:
