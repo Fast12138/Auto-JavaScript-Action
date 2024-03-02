@@ -6,7 +6,7 @@ on:
     paths:
       - 'scripts/**'
   schedule:   
-    - cron: '0 4,10,16,22 * * *'
+     - cron: '0 4,10,16,22 * * *'
     
 env:
   TZ: Asia/Shanghai
