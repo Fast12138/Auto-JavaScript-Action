@@ -14,6 +14,8 @@ env:
 jobs:
   Auto-JS:
     runs-on: ubuntu-latest
+    env:
+       PUSH_PLUS_TOKEN: ${{secrets.PUSH_PLUS_TOKEN}}
     steps:
       - uses: actions/checkout@main  #采用main分支下的
                 
@@ -31,7 +33,7 @@ jobs:
           
       - name: 茄皇第三期
         env:
-          tyqhCookie: ${{ secrets.TYQHCOOKIE }}
+          tyqhCookie: ${{secrets.TYQHCOOKIE}}
         run: node ./scripts/tyqhV2.js
           
       - name: 联通阅读
