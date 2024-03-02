@@ -114,21 +114,20 @@ class UserClass extends BasicClass {
                 method: 'Post',
                 url: 'https://www.soocare.com/soocasuser/userdetail/all/getinfo',
                 body: 'appKey=soocare&timestamp=1684048860982&sign=9a8e0e3862ad6800b8de063ec7994e44&soocasId=' + this.soocasId + '&accessToken=' + this.accessToken + '&sessionCode=' + this.sessionCode,
-                timeout: 5000,
             }
             let { result } = await this.request(Object);
             // console.log(Object);
             // console.log(result);
             if (result?.code == 200) {
                 this.valid = true
-                this.log(`${result?.data?.mobilePhoneNo}数据有效！`, { notify: true })
+                // this.log("数据有效!", { notify: true })
             } else {
-                this.log(result)
+                console.log(result)
+                this.log("CK已失效!", { notify: true })
             }
         } catch (e) {
             console.log(e)
         }
-        await $.wait(3000)
     }
     //查询金币余额
     async currentgold() {
@@ -149,7 +148,7 @@ class UserClass extends BasicClass {
             if (result?.code == 200) {
                 this.log(`金币余额：${result?.data?.currentGold}`, { notify: true })
             } else {
-                this.log(result)
+                console.log(result)
             }
         } catch (e) {
             console.log(e)
@@ -214,12 +213,11 @@ class UserClass extends BasicClass {
             if (result?.code == 200) {
                 this.log(`同步数据：${result?.message}`)
             } else {
-                this.log(result)
+                console.log(result)
             }
         } catch (e) {
             console.log(e)
         }
-        await $.wait(3000)
     }
     //查看报告
     async checkreport() {
@@ -241,12 +239,11 @@ class UserClass extends BasicClass {
             if (result?.code == 200) {
                 this.log(`查看报告：${result?.message}`)
             } else {
-                this.log(result)
+                console.log(result)
             }
         } catch (e) {
             console.log(e)
         }
-        await $.wait(3000)
     }
     //分享
     async shareinfo() {
@@ -268,12 +265,11 @@ class UserClass extends BasicClass {
             if (result?.code == 200) {
                 this.log(`分享：${result?.message}`)
             } else {
-                this.log(result)
+                console.log(result)
             }
         } catch (e) {
             console.log(e)
         }
-        await $.wait(3000)
     }
     //待领取金币详情
     async goldbubbles() {
@@ -299,12 +295,11 @@ class UserClass extends BasicClass {
                 查看报告：${result?.data?.checkReportGold},
                 完成三个任务：${result?.data?.finishTaskGold}`, { notify: true })
             } else {
-                this.log(result)
+                console.log(result)
             }
         } catch (e) {
             console.log(e)
         }
-        await $.wait(3000)
     }
     //领取分享金币
     async goldbubbles_1() {
@@ -325,12 +320,11 @@ class UserClass extends BasicClass {
             if (result?.code == 200) {
                 this.log(`领取分享金币：${result?.data?.currentGold}`)
             } else {
-                this.log(result)
+                console.log(result)
             }
         } catch (e) {
             console.log(e)
         }
-        await $.wait(3000)
     }
     //领取同步金币
     async goldbubbles_2() {
@@ -351,12 +345,11 @@ class UserClass extends BasicClass {
             if (result?.code == 200) {
                 this.log(`领取同步金币：${result?.data?.currentGold}`)
             } else {
-                this.log(result?.message)
+                console.log(result)
             }
         } catch (e) {
             console.log(e)
         }
-        await $.wait(3000)
     }
     //领取报告金币
     async goldbubbles_3() {
@@ -377,12 +370,11 @@ class UserClass extends BasicClass {
             if (result?.code == 200) {
                 this.log(`领取报告金币：${result?.data?.currentGold}`)
             } else {
-                this.log(result)
+                console.log(result)
             }
         } catch (e) {
             console.log(e)
         }
-        await $.wait(3000)
     }
     //金币记录
     async golddetail() {
@@ -416,12 +408,11 @@ class UserClass extends BasicClass {
                     }
                 }
             } else {
-                this.log(result)
+                console.log(result)
             }
         } catch (e) {
             console.log(e)
         }
-        await $.wait(3000)
     }
 
     //做任务逻辑
@@ -444,8 +435,9 @@ class UserClass extends BasicClass {
     //$.log(`最大并发数: ${MAX_THREAD}`)
 
     //封装的读取变量方法, 可以自己另外写也可以直接用, 读取到的账号会存入 $.userList 中
-    $.read_env(UserClass)
-
+    if(!$.read_env(UserClass)){
+        return
+    }
     //正常的做任务流程
     for (let user of $.userList) {
         await user.userTask()
