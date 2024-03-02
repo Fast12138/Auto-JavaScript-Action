@@ -7,7 +7,7 @@ shysCookie=sessionCode##accessToken#soocasId#deviceId
 
 const $ = new Env('素士牙刷')
 const got = require('got')
-const envPrefix = 'shys'
+const envPrefix = 'soocareCookie'
 const envSplitor = ['\n']  //支持多种分割，但要保证变量里不存在这个字符
 const ckNames = [envPrefix + 'Cookie'] //可以支持多变量
 
