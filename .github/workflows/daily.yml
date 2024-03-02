@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'daily/**'
+      - 'daily/soocare.js'
   schedule:   
     - cron: '20 15 * * *' #北京时间23:20
     
