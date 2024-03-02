@@ -7,18 +7,16 @@ on:
       - main
   schedule:   
     - cron: '0 */6 * * *'   #
- 
+    
+env:
+  TZ: Asia/Shanghai
+  
 jobs:
-  run-csjs:
+  Auto-JS:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main  #采用main分支下的
-      
-      - name: Display current directory
-        run: |
-           pwd
-           ls
-           
+                
       - name: Setup Node.js
         uses: actions/setup-node@v2  #安装node.js
         with:
@@ -34,4 +32,8 @@ jobs:
       - name: Run JavaScript script
         env:
           TYQHCOOKIE: ${{ secrets.TYQHCOOKIE }}
-        run: node ./scripts/tyqhV2.js  #脚本存在根目录scripts文件夹下 echo $MY_SECRET
+          chinaUnicomCookie: ${{CHINAUNICOMCOOKIE}}
+        run: | #脚本存在根目录scripts文件夹下
+          node ./scripts/tyqhV2.js
+          node ./scripts/chinaUnicom.js
+          wait
