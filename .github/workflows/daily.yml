@@ -1,0 +1,37 @@
+name: Daily
+ 
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'daily/**'
+  schedule:   
+    - cron: '20 23 * * *'
+    
+env:
+  TZ: Asia/Shanghai
+  
+jobs:
+  Auto-JS:
+    runs-on: ubuntu-latest
+    env:
+       PUSH_PLUS_TOKEN: ${{secrets.PUSH_PLUS_TOKEN}}
+    steps:
+      - uses: actions/checkout@main  #采用main分支下的
+                
+      - name: Setup Node.js
+        uses: actions/setup-node@v2  #安装node.js
+        with:
+          node-version: "18"
+          
+      - name: Install Dependency       
+        run: |
+          npm install
+          npm install got
+          npm install tough-cookie
+          npm install crypto-js
+          
+      - name: 日常
+        env:
+          soocareCookie: ${{secrets.SOOCARECOOKIE}}
+        run: node ./daily/soocare.js
