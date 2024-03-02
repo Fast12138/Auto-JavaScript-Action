@@ -35,8 +35,3 @@ jobs:
         env:
           tyqhCookie: ${{secrets.TYQHCOOKIE}}
         run: node ./scripts/tyqhV2.js
-          
-      - name: 联通阅读
-        env:
-          chinaUnicomCookie: ${{secrets.CHINAUNICOMCOOKIE}}
-        run: node ./scripts/chinaUnicom.js
