@@ -1,4 +1,4 @@
-name: Script
+name: meituan
  
 on:
   workflow_dispatch:
