@@ -4476,9 +4476,9 @@ class _0x44d89a extends _0x21124e {
   }
 }
 !(async () => {
-  if (!(await _0xe1ac9c())) {
-    return;
-  }
+  // if (!(await _0xe1ac9c())) {
+  //   return;
+  // }
   await _0x5b1f1e();
   _0x18d7a9.read_env(_0x44d89a);
   _0x18d7a9.log("\n-------------------------------------");
