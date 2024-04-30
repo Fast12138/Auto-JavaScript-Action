@@ -31,7 +31,7 @@ jobs:
           npm install tough-cookie
           npm install crypto-js
           
-      - name: 茄皇第三期
+      - name: 美团
         env:
-          tyqhCookie: ${{secrets.MEITUANCOOKIE}}
+          meituanCookie: ${{secrets.MEITUANCOOKIE}}
         run: node ./scripts/meituanV3.js
