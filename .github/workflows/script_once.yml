@@ -6,7 +6,7 @@ on:
     paths:
       - 'scripts/sxsxc.js'
   schedule:   
-     - cron: '12 9 * * *'
+     - cron: '02 0 * * *'
     
 env:
   TZ: Asia/Shanghai
@@ -31,7 +31,7 @@ jobs:
           npm install tough-cookie
           npm install crypto-js
           
-      - name: chinaUnicom
+      - name: 书亦烧仙草
         env:
           sysxcCookie: ${{secrets.SYSXCCOOKIE}}
         run: node ./scripts/sysxc.js
