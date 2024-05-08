@@ -478,7 +478,7 @@ function Env(name) {
         }
         //结束
         async exitNow() {
-            //await this.showmsg()
+            await this.showmsg()
             let e = Date.now()
             let s = (e - this.startTime) / 1000
             this.log('')
