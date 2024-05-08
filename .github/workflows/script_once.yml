@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'scripts/sxsxc.js'
+      - 'scripts/sysxc.js'
   schedule:   
      - cron: '02 0 * * *'
     
