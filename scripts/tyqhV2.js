@@ -1293,10 +1293,10 @@ class _0x5823dc extends _0x27023c {
     }
   }
 
-  async exchange_reward(_0x510231 = {}) {
+  async exchange_reward(id) {
     try {
       const _0x56a9e4 = {
-        id: _0x1605b5
+        "id": id
       };
 
       let _0x2c2b4c = {
@@ -1310,7 +1310,7 @@ class _0x5823dc extends _0x27023c {
           result: _0x15d32d
         } = await this.request(_0xad3684.copy(_0x2c2b4c)),
         _0x2665ef = _0xad3684.get(_0x15d32d, "code", -1);
-
+      console.log(_0x15d32d);
       if (_0x2665ef == 0) {
         const _0x38ee89 = {
           notify: true
@@ -1319,7 +1319,7 @@ class _0x5823dc extends _0x27023c {
       } else {
         let _0x9f093a = _0xad3684.get(_0x15d32d, "message", "");
 
-        this.log("兑换[id=" + _0x1605b5 + "]失败[" + _0x2665ef + "]: " + _0x9f093a);
+        this.log("兑换[id=" + id + "]失败[" + _0x2665ef + "]: " + _0x9f093a);
       }
     } catch (_0x3d0811) {
       console.log(_0x3d0811);
@@ -1401,13 +1401,16 @@ class _0x5823dc extends _0x27023c {
     if (!(await this.login())) {
       return;
     }
-
     await this.userInfo_autoSun();
     await this.task_get();
     await this.userInfo_get();
     await this.user_role_get();
     await this.risk_task();
     await this.land_task();
+    this.log("---------抽奖----------")
+    await this.lotter()
+    this.log("---------兑换库存----------")
+    await this.exchangeInfo()
   }
 
   async steal_task(_0x9a46bb = 5, _0x2d2c77 = {}) {
@@ -1417,7 +1420,187 @@ class _0x5823dc extends _0x27023c {
 
     await this.friend_findFriend();
   }
-
+  //抽奖
+  async lotter() {
+    try {
+      const Params = { type: 1 }
+      let options = {
+        fn: "lotter",
+        method: "get",
+        url: _0x502584 + "/qiehuangsecond/ga/activity/find",
+        searchParams: Params,
+        headers: this.gen_sign(Params)
+      },
+        { result } = await this.request(_0xad3684.copy(options))
+      // console.log(result);
+      if (result?.code == 0) {
+        for (const prize of result.data.lotteryPrizeConfigList) {
+          this.log(`礼品：${prize.name} 库存：[${prize.usableStock}/${prize.stock}]`)
+        }
+        let lotter = true
+        if (lotter) {
+          let id = result.data.id;
+          let count = result.data.drawCount - result.data.userDrawCount;
+          for (let i = 0; i < 1; i++) {
+            let slide = true;
+            while (slide) {
+              let draw = await this.draw(id)
+              if (draw.code == 4000) {
+                if (!draw.data.slideImgInfo) {
+                  this.log("验证失败导致部分功能暂时用不了")
+                  slide = false;
+                  break
+                }
+                this.log("触发滑块验证")
+                let data = draw.data.slideImgInfo;
+                let getXpos = await this.slidePost(data.slidingImage, data.backImage)
+                if (!getXpos) {
+                  this.log("滑块验证服务不在运行，请联系作者")
+                  slide = false;
+                  break
+                }
+                // console.log(getXpos)
+                let checkUserCapCode = await this.checkUserCapCode(getXpos.x_coordinate)
+                this.log(`获得：调料包 * ${checkUserCapCode.data}`)
+              } else if (draw.code == 0) {
+                this.log(`抽奖获得：${draw.data.name}`)
+                if (draw.data.type == 2) {
+                  this.log(`抽奖获得：${draw.data.name}`);
+                }
+              } else {
+                slide = false;
+                this.log(draw.message)
+                break
+              }
+            }
+          }
+        } else {
+          this.log("土地和角色没有全部解锁，不参与抽奖")
+        }
+      } else {
+        console.log(result);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async draw(id) {
+    try {
+      const params = { "id": id }
+      let options = {
+        fn: "draw",
+        method: "Get",
+        url: _0x502584 + "/qiehuangsecond/ga/activity/draw",
+        searchParams: params,
+        headers: this.gen_sign(params)
+      }
+      let { result } = await this.request(options)
+      // console.log(JSON.stringify(result, null, 2));
+      if (result?.code == 0) {
+        return result
+      } else {
+        return null
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  async checkUserCapCode(x_coordinate) {
+    try {
+      let data = {
+        "xpos": x_coordinate
+      }
+      let options = {
+        fn: "checkUserCapCode",
+        method: "Post",
+        url: _0x502584 + "/qiehuangsecond/ga/checkUserCapCode",
+        json: data,
+        headers: this.gen_sign({}, data),
+      }
+      // console.log(options);
+      let { statusCode, result } = await this.request(options)
+      // console.log(JSON.stringify(result, null, 2));
+      if (result?.code == 0) {
+        return result
+      } else {
+        return null
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  //库存
+  async exchangeInfo() {
+    try {
+      let options = {
+        fn: "exchangeInfo",
+        method: "Get",
+        url: _0x502584 + "/qiehuangsecond/ga/exchange/find",
+        headers: this.gen_sign()
+      }
+      let { result } = await this.request(options)
+      // console.log(JSON.stringify(result, null, 2));
+      if (result?.code == 0) {
+        let x = result?.data
+        for (let i = 0; i < x.length; i++) {
+          let id = x[i]?.id,
+            name = x[i]?.name,
+            userUseNum = x[i]?.userUseNum,
+            list = x[i];
+          if (name.includes("茄皇相伴礼")) {
+            for (let i of list?.exchangePrizeVoList) {
+              let id = i.id,
+                name = i.name,
+                exchangeTypeId = i.exchangeTypeId,
+                usableStock = i.usableStock, //库存
+                gold = i.gold, //调料包
+                score = i.score, //番茄
+                num = i.num, //可兑换次数
+                userUseNum = i.userUseNum //已兑换次数
+              this.log(`兑换id：${id},商品：${name}，库存：${usableStock}，已兑换次数：${userUseNum}/${num}，所需材料：${gold}/调料包,${score}/番茄。`)
+              if (id == 118) {
+                if (usableStock > 0) {
+                  this.log("上库存了")
+                  await this.exchange_reward(id)
+                }
+              }
+            }
+          }
+        }
+      } else {
+        this.log(result?.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  //滑块
+  async slidePost(slidingImage, backImage) {
+    try {
+      let data = {
+        "gap": slidingImage,
+        "bg": backImage
+      }
+      let options = {
+        fn: "slidePost",
+        method: "Post",
+        url: `http://huakuai.xzxxn7.live/detect_slider_position`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        json: data
+      }
+      let { result } = await this.request(options)
+      // console.log(JSON.stringify(result, null, 2));
+      if (result?.code == 0) {
+        return result
+      } else {
+        return null
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 !(async () => {
