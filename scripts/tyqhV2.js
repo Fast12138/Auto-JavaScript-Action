@@ -1423,55 +1423,30 @@ class _0x5823dc extends _0x27023c {
   //抽奖
   async lotter() {
     try {
-      const Params = { type: 1 }
-      let options = {
-        fn: "lotter",
-        method: "get",
-        url: _0x502584 + "/qiehuangsecond/ga/activity/find",
-        searchParams: Params,
-        headers: this.gen_sign(Params)
-      },
-        { result } = await this.request(_0xad3684.copy(options))
+      let Params = { type: 1 },
+        options = {
+          fn: "lotter",
+          method: "get",
+          url: _0x502584 + "/qiehuangsecond/ga/activity/find",
+          searchParams: Params,
+          headers: this.gen_sign(Params)
+        }
+      let { result } = await this.request(options)
       // console.log(result);
       if (result?.code == 0) {
-        for (const prize of result.data.lotteryPrizeConfigList) {
+        this.checkvalid = true
+        let prizelist = result.data.lotteryPrizeConfigList
+        for (const prize of prizelist) {
           this.log(`礼品：${prize.name} 库存：[${prize.usableStock}/${prize.stock}]`)
         }
-        let lotter = true
-        if (lotter) {
-          let id = result.data.id;
-          let count = result.data.drawCount - result.data.userDrawCount;
-          for (let i = 0; i < 1; i++) {
-            let slide = true;
-            while (slide) {
-              let draw = await this.draw(id)
-              if (draw.code == 4000) {
-                if (!draw.data.slideImgInfo) {
-                  this.log("验证失败导致部分功能暂时用不了")
-                  slide = false;
-                  break
-                }
-                this.log("触发滑块验证")
-                let data = draw.data.slideImgInfo;
-                let getXpos = await this.slidePost(data.slidingImage, data.backImage)
-                if (!getXpos) {
-                  this.log("滑块验证服务不在运行，请联系作者")
-                  slide = false;
-                  break
-                }
-                // console.log(getXpos)
-                let checkUserCapCode = await this.checkUserCapCode(getXpos.x_coordinate)
-                this.log(`获得：调料包 * ${checkUserCapCode.data}`)
-              } else if (draw.code == 0) {
-                this.log(`抽奖获得：${draw.data.name}`)
-                if (draw.data.type == 2) {
-                  this.log(`抽奖获得：${draw.data.name}`);
-                }
-              } else {
-                slide = false;
-                this.log(draw.message)
-                break
-              }
+        if (this.all_land_unlock) {
+          let id = result.data.id,
+            count = result.data.drawCount - result.data.userDrawCount;
+          for (let i = 0; i < count; i++) {
+            while (this.checkvalid) {
+              await this.draw(id)
+              await $.wait(2000)
+              this.log("等待2秒重试")
             }
           }
         } else {
@@ -1486,20 +1461,40 @@ class _0x5823dc extends _0x27023c {
   }
   async draw(id) {
     try {
-      const params = { "id": id }
-      let options = {
-        fn: "draw",
-        method: "Get",
-        url: _0x502584 + "/qiehuangsecond/ga/activity/draw",
-        searchParams: params,
-        headers: this.gen_sign(params)
-      }
+      let params = { "id": id },
+        options = {
+          fn: "draw",
+          method: "Get",
+          url: _0x502584 + "/qiehuangsecond/ga/activity/draw",
+          searchParams: params,
+          headers: this.gen_sign(params)
+        }
       let { result } = await this.request(options)
       // console.log(JSON.stringify(result, null, 2));
-      if (result?.code == 0) {
-        return result
+      if (result.code == 4000) {
+        if (!result.data.slideImgInfo) {
+          this.log("验证失败导致部分功能暂时用不了")
+          this.checkvalid = false;
+        } else {
+          this.log("触发滑块验证")
+          let data = result.data.slideImgInfo,
+            gap = data.slidingImage,
+            bg = data.backImage,
+            getXpos = await this.slidePost(gap, bg)
+          if (!getXpos) {
+            this.log("滑块验证服务链接错误")
+          } else {
+            await this.checkUserCapCode(getXpos.x_coordinate)
+          }
+        }
+      } else if (result.code == 0) {
+        this.log(`抽奖获得：${result.data.name}`)
+        if (result.data.type == 2) {
+          this.log(`抽奖获得：${result.data.name}`);
+        }
       } else {
-        return null
+        this.checkvalid = false;
+        this.log(result.message)
       }
     } catch (error) {
       console.log(error)
@@ -1509,21 +1504,21 @@ class _0x5823dc extends _0x27023c {
     try {
       let data = {
         "xpos": x_coordinate
-      }
-      let options = {
-        fn: "checkUserCapCode",
-        method: "Post",
-        url: _0x502584 + "/qiehuangsecond/ga/checkUserCapCode",
-        json: data,
-        headers: this.gen_sign({}, data),
-      }
+      },
+        options = {
+          fn: "checkUserCapCode",
+          method: "Post",
+          url: _0x502584 + "/qiehuangsecond/ga/checkUserCapCode",
+          json: data,
+          headers: this.gen_sign({}, data),
+        }
       // console.log(options);
       let { statusCode, result } = await this.request(options)
       // console.log(JSON.stringify(result, null, 2));
       if (result?.code == 0) {
-        return result
+        this.log(result.data)
       } else {
-        return null
+        this.log(result?.message)
       }
     } catch (error) {
       console.log(error)
@@ -1560,8 +1555,8 @@ class _0x5823dc extends _0x27023c {
               this.log(`兑换id：${id},商品：${name}，库存：${usableStock}，已兑换次数：${userUseNum}/${num}，所需材料：${gold}/调料包,${score}/番茄。`)
               if (id == 118) {
                 if (usableStock > 0) {
-                  this.log("上库存了")
-                  await this.exchange_reward(id)
+                  this.log("上库存了", { notify: true })
+                  await this.exchange(id)
                 }
               }
             }
@@ -1569,6 +1564,45 @@ class _0x5823dc extends _0x27023c {
         }
       } else {
         this.log(result?.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  async exchange(id) {
+    try {
+      let params = { "id": id },
+        options = {
+          fn: "exchange",
+          method: "Get",
+          url: _0x502584 + "/qiehuangsecond/ga/exchange/reward",
+          searchParams: params,
+          headers: this.gen_sign(params)
+        }
+      let { result } = await this.request(options)
+      // console.log(JSON.stringify(result, null, 2));
+      if (result.code == 4000) {
+        if (!result.data.slideImgInfo) {
+          this.log("验证失败导致部分功能暂时用不了")
+        } else {
+          this.log("触发滑块验证")
+          let data = result.data.slideImgInfo,
+            gap = data.slidingImage,
+            bg = data.backImage,
+            getXpos = await this.slidePost(gap, bg)
+          if (!getXpos) {
+            this.log("滑块验证服务链接错误")
+          } else {
+            await this.checkUserCapCode(getXpos.x_coordinate)
+          }
+        }
+      } else if (result.code == 0) {
+        this.log(`兑换获得：${result.data.name}`)
+        if (result.data?.type == 2) {
+          this.log(`兑换获得：${result.data?.name}`);
+        }
+      } else {
+        this.log(result.message)
       }
     } catch (error) {
       console.log(error)
@@ -1590,9 +1624,9 @@ class _0x5823dc extends _0x27023c {
         },
         json: data
       }
-      let { result } = await this.request(options)
+      let { statusCode, result } = await this.request(options)
       // console.log(JSON.stringify(result, null, 2));
-      if (result?.code == 0) {
+      if (statusCode == 200) {
         return result
       } else {
         return null
