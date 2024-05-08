@@ -1445,7 +1445,7 @@ class _0x5823dc extends _0x27023c {
           for (let i = 0; i < count; i++) {
             while (this.checkvalid) {
               await this.draw(id)
-              await $.wait(2000)
+              await _0xad3684.wait(2000)
               this.log("等待2秒重试")
             }
           }
@@ -1516,7 +1516,7 @@ class _0x5823dc extends _0x27023c {
       let { statusCode, result } = await this.request(options)
       // console.log(JSON.stringify(result, null, 2));
       if (result?.code == 0) {
-        this.log(result.data)
+        this.log("获得："+result.data)
       } else {
         this.log(result?.message)
       }
