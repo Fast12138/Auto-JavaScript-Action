@@ -200,6 +200,7 @@ class UserClass extends BasicClass {
                 console.log("--------个人状态--------")
                 this.log(result?.data?.joinedGroup ? "已" : "未" + "加入社群")
                 if (result?.data?.supplementarySignCardStatus ==1) {
+                    this.log("准备签到")
                     await this.getVcode()
                 } else {
                     this.log("今日已签到", { notify: true })
@@ -298,7 +299,7 @@ class UserClass extends BasicClass {
             let { statusCode, result } = await this.request(options)
             // console.log(JSON.stringify(result, null, 2));
             if (result.resultCode === '0') {
-                if (result?.data?.couponTemplateList) {
+                if (result?.data?.couponTemplateList.length>0) {
                     let List = result?.data?.couponTemplateList[0],
                         couponName = List.couponName,
                         couponTemplateId = List.couponTemplateId,
