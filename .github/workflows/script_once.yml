@@ -6,7 +6,7 @@ on:
     paths:
       - 'scripts/sysxc.js'
   schedule:   
-     - cron: '02 0 * * *'
+     - cron: '02 16 * * *'
     
 env:
   TZ: Asia/Shanghai
