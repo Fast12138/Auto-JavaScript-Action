@@ -169,12 +169,14 @@ class UserClass extends BasicClass {
                         signDays = prizeList.signDays,
                         groupLimitType = prizeList.groupLimitType,
                         signInRulesDetailId = prizeList.signInRulesDetailId,
+                        prizeStatus = prizeList.prizeStatus,
                         couponInfoList = prizeList.couponInfoList,
                         couponName = couponInfoList[0]?.couponName,
                         couponTemplateId = couponInfoList[0]?.couponTemplateId,
                         remainingQuantity = couponInfoList[0]?.remainingQuantity
+                    // if (prizeStatus != 0) {
                     couponName && this.log("奖励要求：" + couponName + ",连续签到:" + signDays + "天," + (groupLimitType === "LIMITED" ? "需要" : "不需要") + "加入社群")
-                    // 领取奖励
+                    // }
                 }
                 console.log("--------签到统计--------")
                 this.log("本月连续签到 " + result?.data?.days + " 天", { notify: true })
@@ -194,17 +196,13 @@ class UserClass extends BasicClass {
                 url: "https://scrm-prod.shuyi.org.cn/saas-gateway/api/agg-trade/v1/signIn/querySignInRecord",
             }
             let { statusCode, result } = await this.request(options)
-            console.log(JSON.stringify(result, null, 2));
+            // console.log(JSON.stringify(result, null, 2));
             if (result.resultCode === '0') {
                 this.valid = true
                 console.log("--------个人状态--------")
                 this.log(result?.data?.joinedGroup ? "已" : "未" + "加入社群")
-                if (result?.data?.supplementarySignCardStatus ==1) {
-                    this.log("准备签到")
-                    await this.getVcode()
-                } else {
-                    this.log("今日已签到", { notify: true })
-                }
+                this.log("准备签到")
+                await this.getVcode()
             } else {
                 this.log(result?.resultMsg)
             }
@@ -232,21 +230,25 @@ class UserClass extends BasicClass {
                     bg = result.data.originalImageBase64,
                     gap = result.data.jigsawImageBase64
                 // console.log(VcodeToken, VcodeKey);
-                while (this.checkvalid) {
-                    this.log("触发滑块,请等待")
-                    let x_pot = await this.slidePost(gap, bg)
-                    if (x_pot) {
-                        this.log("滑块验证中")
-                        let x = x_pot?.x_coordinate,
-                            pointStr = JSON.stringify({
-                                "x": x,
-                                "y": 5
-                            })
-                        let pointJson = this.aesEncrypt(VcodeKey, pointStr)
-                        // console.log(aesRes, VcodeToken, VcodeKey);
-                        await this.checkVcode(pointJson, VcodeToken, VcodeKey, pointStr)
+                for (let i = 0; i < 5; i++) {
+                    if (this.checkvalid) {
+                        this.log("触发滑块,请等待")
+                        let x_pot = await this.slidePost(gap, bg)
+                        if (x_pot) {
+                            this.log("滑块验证中")
+                            let x = x_pot?.x_coordinate,
+                                pointStr = JSON.stringify({
+                                    "x": x,
+                                    "y": 5
+                                })
+                            let pointJson = this.aesEncrypt(VcodeKey, pointStr)
+                            // console.log(aesRes, VcodeToken, VcodeKey);
+                            await this.checkVcode(pointJson, VcodeToken, VcodeKey, pointStr)
+                        } else {
+                            this.log("滑块服务器连接错误")
+                        }
                     } else {
-                        this.log("滑块服务器连接错误")
+                        break
                     }
                     await $.wait(2000)
                     this.log("等待2秒重试")
@@ -299,7 +301,7 @@ class UserClass extends BasicClass {
             let { statusCode, result } = await this.request(options)
             // console.log(JSON.stringify(result, null, 2));
             if (result.resultCode === '0') {
-                if (result?.data?.couponTemplateList.length>0) {
+                if (result?.data?.couponTemplateList.length > 0) {
                     let List = result?.data?.couponTemplateList[0],
                         couponName = List.couponName,
                         couponTemplateId = List.couponTemplateId,
