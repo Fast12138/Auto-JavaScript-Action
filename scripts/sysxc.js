@@ -199,7 +199,7 @@ class UserClass extends BasicClass {
                 this.valid = true
                 console.log("--------个人状态--------")
                 this.log(result?.data?.joinedGroup ? "已" : "未" + "加入社群")
-                if (result?.data?.supplementarySignCardStatus === "0") {
+                if (result?.data?.supplementarySignCardStatus === "1") {
                     await this.getVcode()
                 } else {
                     this.log("今日已签到", { notify: true })
