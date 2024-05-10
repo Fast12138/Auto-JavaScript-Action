@@ -6,7 +6,7 @@ on:
     paths:
       - 'scripts/chinaUnicom.js'
   schedule:   
-     - cron: '12 7,14,20 * * *'
+     - cron: '12 6,12,23 * * *'
     
 env:
   TZ: Asia/Shanghai
