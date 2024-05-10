@@ -194,7 +194,7 @@ class UserClass extends BasicClass {
                 url: "https://scrm-prod.shuyi.org.cn/saas-gateway/api/agg-trade/v1/signIn/querySignInRecord",
             }
             let { statusCode, result } = await this.request(options)
-            // console.log(JSON.stringify(result, null, 2));
+            console.log(JSON.stringify(result, null, 2));
             if (result.resultCode === '0') {
                 this.valid = true
                 console.log("--------个人状态--------")
