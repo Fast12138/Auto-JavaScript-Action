@@ -27,9 +27,7 @@ jobs:
       - name: Install Dependency       
         run: |
           npm install
-          npm install got
-          npm install tough-cookie
-          npm install crypto-js
+          npm install got tough-cookie crypto-js
           
       - name: 书亦烧仙草
         env:
