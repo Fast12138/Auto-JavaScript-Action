@@ -19,14 +19,14 @@ jobs:
     steps:
       - uses: actions/checkout@main  #采用main分支下的
                 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v2  #安装node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3  #安装node.js
         with:
-          node-version: '18.x'
+          node-version: '20'
           
       - name: Install Dependency       
         run: |
-          npm install 
+          npm install
           npm install got tough-cookie crypto-js form-data
                     
       - name: chinaUnicom
