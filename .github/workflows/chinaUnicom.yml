@@ -30,6 +30,7 @@ jobs:
           npm install got
           npm install tough-cookie
           npm install crypto-js
+          npm install form-data
           
       - name: chinaUnicom
         env:
