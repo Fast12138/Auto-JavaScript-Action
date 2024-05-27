@@ -6,6 +6,7 @@
   "dependencies": {
     "got": "^11.8.2",
     "tough-cookie": "^4.0.0",
-    "crypto-js": "^4.1.1"
+    "crypto-js": "^4.1.1"，
+    "form-data":"*"
   }
 }
