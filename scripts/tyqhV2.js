@@ -1407,10 +1407,10 @@ class _0x5823dc extends _0x27023c {
     await this.user_role_get();
     await this.risk_task();
     await this.land_task();
-    this.log("---------抽奖----------")
-    await this.lotter()
     this.log("---------兑换库存----------")
     await this.exchangeInfo()
+    this.log("---------抽奖----------")
+    await this.lotter()
   }
 
   async steal_task(_0x9a46bb = 5, _0x2d2c77 = {}) {
@@ -1443,10 +1443,11 @@ class _0x5823dc extends _0x27023c {
           let id = result.data.id,
             count = result.data.drawCount - result.data.userDrawCount;
           for (let i = 0; i < count; i++) {
-            while (this.checkvalid) {
+            if (this.checkvalid) {
               await this.draw(id)
               await _0xad3684.wait(2000)
-              this.log("等待2秒重试")
+            } else {
+              break
             }
           }
         } else {
@@ -1483,6 +1484,7 @@ class _0x5823dc extends _0x27023c {
             getXpos = await this.slidePost(gap, bg)
           if (!getXpos) {
             this.log("滑块验证服务链接错误")
+            this.checkvalid = false;
           } else {
             await this.checkUserCapCode(getXpos.x_coordinate)
           }
