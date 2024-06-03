@@ -5,8 +5,9 @@ on:
   push:
     paths:
       - 'scripts/chinaUnicom.js'
+      - 'scripts/sfsy.js'
   schedule:   
-     - cron: '12 6,12,23 * * *'
+     - cron: '40 0,7,15 * * *'
     
 env:
   TZ: Asia/Shanghai
@@ -17,10 +18,10 @@ jobs:
     env:
        PUSH_PLUS_TOKEN: ${{secrets.PUSH_PLUS_TOKEN}}
     steps:
-      - uses: actions/checkout@main  #采用main分支下的
+      - uses: actions/checkout@main
                 
       - name: Setup Node.js
-        uses: actions/setup-node@v3  #安装node.js
+        uses: actions/setup-node@v3 
         with:
           node-version: '20'
           
@@ -33,3 +34,8 @@ jobs:
         env:
           chinaUnicomCookie: ${{secrets.CHINAUNICOMCOOKIE}}
         run: node ./scripts/chinaUnicom.js
+        
+      - name: sfsy
+        env:
+          sfsyUrl: ${{secrets.SFSYURL}}
+        run: node ./scripts/sfsy.js
