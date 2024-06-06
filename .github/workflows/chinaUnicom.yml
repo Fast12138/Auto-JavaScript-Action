@@ -7,7 +7,7 @@ on:
       - 'scripts/chinaUnicom.js'
       - 'scripts/sfsy.js'
   schedule:   
-     - cron: '58 0,7,15 * * *'
+     - cron: '46 0,7,15 * * *'
     
 env:
   TZ: Asia/Shanghai
