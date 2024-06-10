@@ -2001,7 +2001,7 @@ function _0x4726c3(_0x5e240c) {
     }
 
     async exitNow() {
-      await this.showmsg();
+      // await this.showmsg();
 
       let _0x583b85 = Date.now(),
         _0x44515d = (_0x583b85 - this.startTime) / 1000;
