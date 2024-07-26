@@ -20,9 +20,9 @@ const _0x2bad9c = 2.08,
   _0x2eca5f = "https://leafxcy.coding.net/api/user/leafxcy/project/validcode/shared-depot/validCode/git/blob/master/code.json",
   _0x1971e5 = "https://leafxcy.coding.net/api/user/leafxcy/project/validcode/shared-depot/validCode/git/blob/master/" + _0x4a2c68 + ".json",
   _0x239ea0 = 5,
-  _0x469423 = "iphone_c@11.0503",
-  _0x546817 = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 unicom{version:" + _0x469423 + "}",
-  _0x281cdf = "d82ac3821b50e6f05f6c684d27d252a584517c685da7130a2bd27361afb4f2e300ab1ecc5a701b4d2d4df69e795299dc08c2c5a1129381372a65a1a9a397eb16cec3c3cc0179f01df450042f3469658331cec050c7d5c50b121dc28b3f31ece6",
+  _0x469423 = "android@11.0100",
+  _0x546817 = "Dalvik/2.1.0 (Linux; U; Android 10; DE106 Build/QQ3A.200805.001);unicom{version:"+_0x469423+"}",
+  _0x281cdf = "64cdd06dbf1ba0c9db682c64ebcf3ec75c88161d308273cebc02c411c5b2a92152669f62be5aa3b4a8fe323c41a70e424a385cefb8ab12ba6c84be9432bce070808adc782233223cd2778a11cec345d6",
   _0x3d9810 = "10000002",
   _0xa01453 = "7k1HcDL8RKvc",
   _0x49426e = "woreadst^&*12345",
@@ -396,12 +396,13 @@ class _0x333e45 extends _0x24046c {
           url: "https://m.client.10010.com/mobileService/onLine.htm",
           form: {
             token_online: this.token_online,
-            reqtime: _0x4c672b.time("yyyy-MM-dd hh:mm:ss"),
+            reqtime: Date.now(),
             appId: _0x281cdf,
             version: _0x469423,
             step: "bindlist",
             isFirstInstall: 0,
-            deviceModel: "iPhone"
+            provinceChanel: "general",
+            deviceModel: "DE106"
           }
         },
         {
