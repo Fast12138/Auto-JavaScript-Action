@@ -3969,15 +3969,15 @@ class _0x333e45 extends _0x24046c {
   for (let _0x3df144 of _0x4c672b.userList.filter(_0xa33969 => _0xa33969.valid)) {
     await _0x3df144.userTask();
   }
-  let _0x1b59a7 = _0x4c672b.userList.filter(_0x3fbb9d => _0x3fbb9d.valid && _0x3fbb9d.woread_verifycode && (_0x3fbb9d.need_read_rabbit || Object.values(_0x3fbb9d.moonbox_task_record).filter(_0x5c7f98 => _0x5c7f98 === true).length));
-  if (_0x1b59a7.length) {
-    let _0x46ed2b = [];
-    _0x4c672b.log("\n============ 开始刷阅读时长 ============");
-    for (let _0x5ef13c of _0x1b59a7) {
-      _0x46ed2b.push(_0x5ef13c.woread_reading_task());
-    }
-    await Promise.all(_0x46ed2b);
-  }
+  // let _0x1b59a7 = _0x4c672b.userList.filter(_0x3fbb9d => _0x3fbb9d.valid && _0x3fbb9d.woread_verifycode && (_0x3fbb9d.need_read_rabbit || Object.values(_0x3fbb9d.moonbox_task_record).filter(_0x5c7f98 => _0x5c7f98 === true).length));
+  // if (_0x1b59a7.length) {
+  //   let _0x46ed2b = [];
+  //   _0x4c672b.log("\n============ 开始刷阅读时长 ============");
+  //   for (let _0x5ef13c of _0x1b59a7) {
+  //     _0x46ed2b.push(_0x5ef13c.woread_reading_task());
+  //   }
+  //   await Promise.all(_0x46ed2b);
+  // }
 })().catch(_0x56ffeb => _0x4c672b.log(_0x56ffeb)).finally(() => _0x4c672b.exitNow());
 async function _0x342cb7(_0x1f9ad3 = 0) {
   let _0x3e3c00 = false;
