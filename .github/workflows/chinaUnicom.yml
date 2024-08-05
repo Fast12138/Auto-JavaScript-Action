@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'scripts/chinaUnicom.js'
-      - 'scripts/sfsy.js'
+      - 'scripts/run'
   schedule:   
      - cron: '56 6,16 * * *'
     
