@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'scripts/tyqhV2.js'
+      - 'scripts/run'
   schedule:   
      - cron: '12 */4 * * *'
     
