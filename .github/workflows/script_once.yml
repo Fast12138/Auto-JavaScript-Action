@@ -15,7 +15,8 @@ jobs:
   script_once:
     runs-on: ubuntu-latest
     env:
-       PUSH_PLUS_TOKEN: ${{secrets.PUSH_PLUS_TOKEN}}
+       WX_PUSH_TOKEN: ${{secrets.WX_PUSH_TOKEN}}
+       WX_PUSH_UIDS: ${{secrets.WX_PUSH_UIDS}}
     steps:
       - uses: actions/checkout@main  #采用main分支下的
                 
