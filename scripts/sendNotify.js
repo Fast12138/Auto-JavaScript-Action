@@ -207,6 +207,7 @@ if (process.env.PUSH_PLUS_USER) {
 }
 if (process.env.WX_PUSH_TOKEN) {
   WX_PUSH_TOKEN = process.env.WX_PUSH_TOKEN
+  WX_PUSH_UIDS = process.env.WX_PUSH_UIDS
 }
 //==========================云端环境变量的判断与接收=========================
 
