@@ -35,7 +35,7 @@ jobs:
           chinaUnicomCookie: ${{secrets.CHINAUNICOMCOOKIE}}
         run: node ./scripts/chinaUnicom.js
         
-      # - name: sfsy
-      #   env:
-      #     sfsyUrl: ${{secrets.SFSYURL}}
-      #   run: node ./scripts/sfsy.js
+      - name: sfsy
+        env:
+          sfsyUrl: ${{secrets.SFSYURL}}
+        run: node ./scripts/sfsy.js
